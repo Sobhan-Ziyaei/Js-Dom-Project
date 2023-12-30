@@ -46,10 +46,19 @@ const start = () => {
 
 const deleteRow = (button) => {
   let personId = button.dataset.id;
-  let person = persons.find((person) => {
-    person.id == personId;
-  });
-  console.log(person);
+
+  let personIndex = persons.findIndex((person) => person.id == personId);
+  console.log(personIndex);
+
+  if (personIndex !== -1) {
+    persons.splice(personIndex, 1);
+
+    // console.log("Removed person:", persons[personIndex]);
+  } else {
+    console.log("Person not found");
+  }
+
+  console.log(persons);
 
   var row = button.parentNode.parentNode;
   row.parentNode.removeChild(row);
