@@ -64,7 +64,46 @@ const deleteRow = (button) => {
   row.parentNode.removeChild(row);
 };
 
-const editRow = () => {};
+const editRow = (button) => {
+  let personId = button.dataset.id;
+  let personIndex = persons.findIndex((person) => person.id == personId);
+
+  const person = persons[personIndex];
+  console.log(person);
+  let tr = tbody.children[person.id - 1];
+  let tds = tr.children;
+
+  for (let i = 0; i < tds.length - 1; i++) {
+    tds[i].innerHTML = `<input type="text" value="${tds[i].innerText}">`;
+  }
+
+  tds[4].innerHTML = `<button class='btn btn-primary' data-id=${person.id} onclick='saveEditRow(${personIndex})'>Save</button>`;
+};
+
+const saveEditRow = (index) => {
+  let tr = tbody.children[index];
+  let tds = tr.children;
+
+  var idInput = tds[0].querySelector("input");
+  var nameInput = tds[1].querySelector("input");
+  var lastNameInput = tds[2].querySelector("input");
+  var ageInput = tds[3].querySelector("input");
+
+  var idValue = Number(idInput.value);
+  var nameValue = nameInput.value;
+  var lastNameValue = lastNameInput.value;
+  var ageValue = Number(ageInput.value);
+
+  persons[index].id = idValue;
+  persons[index].name = nameValue;
+  persons[index].lastName = lastNameValue;
+  persons[index].age = ageValue;
+
+  tds[4].innerHTML = `<button class='btn btn-warning' data-id=${persons[index].id} onclick='editRow(this)'>Edit</button> <button class='btn btn-danger' data-id=${persons[index].id} onclick='deleteRow(this)'>Delete</button>`;
+  tbody.innerHTML = "";
+  start();
+  console.log(persons);
+};
 
 const createNewPerson = () => {
   let row = tbody.insertRow();
