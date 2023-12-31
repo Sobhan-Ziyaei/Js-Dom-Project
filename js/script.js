@@ -8,7 +8,9 @@ class Person {
 }
 
 const addPerson = document.getElementById("Add-Person");
+const sortIcon = document.getElementById("sort");
 let tbody = document.querySelector("tbody");
+let isAscending = true;
 
 let persons = [
   new Person(1, "sobhan", "ziyaei", 28),
@@ -22,6 +24,23 @@ let persons = [
   new Person(9, "nazanin", "moradi", 48),
   new Person(10, "mohsen", "jamali", 41),
 ];
+
+const sort = () => {
+  if (isAscending) {
+    persons.sort((a, b) => a.id - b.id);
+    console.log(persons);
+  } else {
+    persons.sort((a, b) => b.id - a.id);
+    console.log(persons);
+  }
+
+  isAscending = !isAscending;
+  tbody.innerHTML = "";
+  start();
+
+};
+
+sortIcon.addEventListener("click", sort);
 
 const start = () => {
   for (let person of persons) {
